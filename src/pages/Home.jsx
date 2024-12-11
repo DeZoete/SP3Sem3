@@ -3,7 +3,6 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from './theme.js';
 
-// Header Component
 const Header = styled.header`
   background-color: #2d3a3f;
   background-color: ${(props) => props.theme.darkSkyBlue};
@@ -23,12 +22,6 @@ const Logo = styled.div`
 const LogoImg = styled.img`
   height: 40px;
   margin-right: 15px;
-`;
-
-const LogoText = styled.h1`
-  font-size: 1.8rem;
-  color: white;
-  margin: 0;
 `;
 
 const NavMenu = styled.nav`
@@ -106,7 +99,6 @@ const Home = () => {
             src="https://neh.kea.dk/images/logos/cphbusiness_neg.png"
             alt="Logo"
           />
-          {/* <LogoText>Styled App</LogoText> */}
         </Logo>
       </Header>
 

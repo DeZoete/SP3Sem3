@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledMenu = styled.ul`
@@ -20,6 +20,9 @@ function TopMenu() {
         <li>
           <NavLink to="/login">Login</NavLink>
         </li>
+        <main>
+          <Outlet />
+        </main>
       </StyledMenu>
     </nav>
   );

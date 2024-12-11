@@ -11,21 +11,45 @@ const Container = styled.div`
   border: 1px solid blue;
 `;
 
+const Header = styled.header`
+  padding: 1rem;
+  width: 100%;
+  max-width: var(--small-device);
+  border-bottom: 1px solid silver;
+`;
+
+const Main = styled.main`
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: var(--small-device);
+  min-height: 80vh;
+`;
+
+const Footer = styled.footer`
+  padding: 1rem;
+  width: 100%;
+  max-width: var(--small-device);
+  display: flex;
+  justify-content: space-evenly;
+  border-top: 1px solid silver;
+`;
+
 function MainLayout() {
   return (
     <>
       <GlobalStyle />
       <Container>
-        <header>
+        <Header>
           <TopMenu />
-        </header>
-        <main>
+        </Header>
+        <Main>
           <Outlet />
-        </main>
-        <footer>
+        </Main>
+        <Footer>
           <p>&copy; Jon Bertelsen</p>
           <p>Todo system v. 0.9</p>
-        </footer>
+        </Footer>
+        <Outlet />
       </Container>
     </>
   );
