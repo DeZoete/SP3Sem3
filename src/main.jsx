@@ -6,28 +6,29 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
-/*
 import MainLayout from './layouts/MainLayout.jsx';
-import Login from './pages/Login.jsx';
-import ZooPage from './pages/ZooPage.jsx';
-*/
+import AdminPage from './pages/AdminPage.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 import Home from './pages/Home.jsx';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+import ZooPage from './pages/ZooPage.jsx';
 
-/*
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
       <Route index element={<Home />} />
-      <Route path="todos" element={<ZooPage />} />
+      <Route path="zoopage" element={<ZooPage />} />
+      <Route path="register" element={<Register />} />
+      <Route path="adminpage" element={<AdminPage />} />
       <Route path="login" element={<Login />} />
+      <Route path="error" element={<ErrorPage />} />
     </Route>
   )
 );
-*/
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Home />
-    {/*<RouterProvider router={router} /> */}
+    <RouterProvider router={router} />
   </StrictMode>
 );
