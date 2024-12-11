@@ -92,32 +92,9 @@ const Home = () => {
   }, [location]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Header>
-        <Logo onClick={() => navigate('/')}>
-          <LogoImg
-            src="https://neh.kea.dk/images/logos/cphbusiness_neg.png"
-            alt="Logo"
-          />
-        </Logo>
-      </Header>
-
-      <Content>
-        <LeftMenu>
-          <LeftMenuItem to="/">Home</LeftMenuItem>
-          <LeftMenuItem to="/error">Error handling</LeftMenuItem>
-          <LeftMenuItem to="/zoopage">Zoo</LeftMenuItem>
-          <LeftMenuItem to="/register">Register</LeftMenuItem>
-          <LeftMenuItem to="/adminpage">Admin</LeftMenuItem>
-          <LeftMenuItem to="/login">Login</LeftMenuItem>
-          <LeftMenuItem to="/about">About</LeftMenuItem>
-        </LeftMenu>
-        <MainContent>
-          {errorMessage && <ErrorBanner>{errorMessage}</ErrorBanner>}
-          <Outlet />
-        </MainContent>
-      </Content>
-    </ThemeProvider>
+    <>
+    <h1>Jonas er giga chad</h1>
+    </>
   );
 };
 

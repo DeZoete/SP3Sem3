@@ -32,8 +32,6 @@ function LogIn({ login }) {
           value={loginCredentials.password}
         />
         <button type="submit">Login</button>
-
-        {JSON.stringify(loginCredentials)}
       </form>
     </div>
   );

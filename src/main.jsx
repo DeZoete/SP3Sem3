@@ -13,6 +13,7 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import ZooPage from './pages/ZooPage.jsx';
+import About from './pages/About.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,8 @@ const router = createBrowserRouter(
       <Route path="adminpage" element={<AdminPage />} />
       <Route path="login" element={<Login />} />
       <Route path="error" element={<ErrorPage />} />
+      <Route path="about" element={<About/>} />
+
     </Route>
   )
 );
