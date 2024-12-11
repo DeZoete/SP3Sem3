@@ -1,14 +1,12 @@
-import React, {useEffect} from "react";
-import styled, {ThemeProvider} from "styled-components";
-import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
-import "./App.css";
-import {theme} from './theme.js'
-
+import React, { useEffect } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
+import { theme } from './theme.js';
 
 // Header Component
 const Header = styled.header`
-  // background-color: #2d3a3f;
-  background-color: ${props => props.theme.darkSkyBlue};
+  background-color: #2d3a3f;
+  background-color: ${(props) => props.theme.darkSkyBlue};
   color: white;
   padding: 20px 40px;
   display: flex;
@@ -92,23 +90,43 @@ const ErrorBanner = styled.div`
 const Home = () => {
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [showRenderError, setShowRenderError] = React.useState(false);
-  // Use useLocation to listen for route changes
   const location = useLocation();
   const navigate = useNavigate();
 
-
-  // Reset error message on route change
   useEffect(() => {
     setErrorMessage(null);
     setShowRenderError(false);
   }, [location]);
 
   return (
-    <div>
-      <h1>About this dick</h1>
-      <Outlet />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Header>
+        <Logo onClick={() => navigate('/')}>
+          <LogoImg
+            src="https://neh.kea.dk/images/logos/cphbusiness_neg.png"
+            alt="Logo"
+          />
+          {/* <LogoText>Styled App</LogoText> */}
+        </Logo>
+      </Header>
+
+      <Content>
+        <LeftMenu>
+          <LeftMenuItem to="/">Home</LeftMenuItem>
+          <LeftMenuItem to="/error">Error handling</LeftMenuItem>
+          <LeftMenuItem to="/zoopage">Zoo</LeftMenuItem>
+          <LeftMenuItem to="/register">Register</LeftMenuItem>
+          <LeftMenuItem to="/adminpage">Admin</LeftMenuItem>
+          <LeftMenuItem to="/login">Login</LeftMenuItem>
+          <LeftMenuItem to="/about">About</LeftMenuItem>
+        </LeftMenu>
+        <MainContent>
+          {errorMessage && <ErrorBanner>{errorMessage}</ErrorBanner>}
+          <Outlet />
+        </MainContent>
+      </Content>
+    </ThemeProvider>
   );
-}
+};
 
 export default Home;
