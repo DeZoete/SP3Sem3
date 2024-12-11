@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom'; // Corrected import
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledMenu = styled.ul`

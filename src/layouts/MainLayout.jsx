@@ -42,9 +42,6 @@ function MainLayout() {
         <Header>
           <TopMenu />
         </Header>
-        <Main>
-          <Outlet />
-        </Main>
         <Footer>
           <p>&copy; Jon Bertelsen</p>
           <p>Todo system v. 0.9</p>
