@@ -1,13 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import facade from '../util/apiFacade';
 
-function LogIn({ login }) {
+function LogIn({ setLoggedIn }) {
   const init = { username: '', password: '' };
   const [loginCredentials, setLoginCredentials] = useState(init);
+  const [error, setError] = useState(null);
 
   const performLogin = (evt) => {
     evt.preventDefault();
-    login(loginCredentials.username, loginCredentials.password);
+    facade.login(loginCredentials.username, loginCredentials.password)
+      .then(() => setLoggedIn(true))
+      .catch(err => {
+        console.log(err);
+        if (err.fullError) {
+          setError("Login failed: " + (err.fullError.message || "Unknown error"));
+        } else {
+          setError("Login failed: " + (err.message || "Unknown error"));
+        }
+      });
   };
+
   const onChange = (evt) => {
     setLoginCredentials({
       ...loginCredentials,
@@ -28,11 +40,13 @@ function LogIn({ login }) {
         <input
           placeholder="Password"
           id="password"
+          type="password"
           onChange={onChange}
           value={loginCredentials.password}
         />
         <button type="submit">Login</button>
       </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from './theme.js';
 
+
 const Header = styled.header`
   background-color: #2d3a3f;
   background-color: ${(props) => props.theme.darkSkyBlue};
