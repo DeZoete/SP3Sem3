@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-import { ErrorContext } from '../context/ErrorContext.jsx';
 import { theme } from '../pages/theme.js';
 import apiFacade from '../util/apiFacade';
 
@@ -9,6 +8,7 @@ const Header = styled.header`
   background-color: #2d3a3f;
   background-color: ${(props) => props.theme.darkSkyBlue};
   color: white;
+  display: flex;
   padding: 20px 40px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
@@ -24,20 +24,20 @@ const Logo = styled.img`
   height: 80px;
 `;
 
-const Content = styled.div`
+const Body = styled.div`
   display: flex;
   margin-top: 20px;
   height: calc(100vh - 80px);
   color: #333;
 `;
 
-const LeftMenu = styled.div`
+const SideBar = styled.div`
   width: 200px;
   background-color: #f4f4f4;
   padding: 20px;
 `;
 
-const LeftMenuItem = styled(Link)`
+const SideBarItem = styled(Link)`
   display: block;
   color: #333;
   text-decoration: none;
@@ -49,15 +49,24 @@ const LeftMenuItem = styled(Link)`
 const RightMenu = styled.div`
   display: flex;
   gap: 15px;
+  max-height: 30%;
 `;
-const RightMenuItem = styled(Link)`
+const HeaderButton = styled(Link)`
   color: white;
-  text-decoration: none;
   font-size: 1.1rem;
+  border: 1px solid white;
+  border-radius: 5px;
   &:hover {
     text-decoration: underline;
     font-weight: bold;
   }
+`;
+
+const HeaderTitle = styled.h1`
+  font-size: 3.5rem;
+  flex: 1;
+  text-align: center;
+  margin: 0;
 `;
 
 const RightSideHeaderContent = styled.div`
@@ -86,13 +95,18 @@ const ErrorBanner = styled.div`
   border-radius: 5px;
 `;
 
-function MainLayout({ loggedIn, setLoggedIn }) {
-  const { errorMessage, clearError } = useContext(ErrorContext);
+const ErrorButton = styled.button`
+  background-color: #f8d7da;
+`;
 
+export default function MainLayout({ loggedIn, setLoggedIn }) {
+  const [errorMessage, setErrorMessage] = useState('');
+  const clearError = () => setErrorMessage('');
   const logOut = () => {
     apiFacade.logout();
     setLoggedIn(false);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Header>
@@ -101,47 +115,45 @@ function MainLayout({ loggedIn, setLoggedIn }) {
             <Logo src="../images/logo.png" alt="Logo" />
           </LogoLink>
         </LeftSideHeaderContent>
+        <HeaderTitle> Cool Title Bro </HeaderTitle>
         <RightSideHeaderContent>
+          {/* <RightMenu> is used for spreading the buttons in the header*/}
           <RightMenu>
             {loggedIn ? (
               <>
-                <RightMenuItem to="/profile">Profile</RightMenuItem>
-                <RightMenuItem to="/" as={Link} onClick={logOut}>
+                <HeaderButton to="/profile">Profile</HeaderButton>
+                <HeaderButton to="/" as={Link} onClick={logOut}>
                   Logout
-                </RightMenuItem>
+                </HeaderButton>
               </>
             ) : (
               <>
-                <RightMenuItem to="/login">Login</RightMenuItem>
-                <RightMenuItem to="/register">Register</RightMenuItem>
+                <HeaderButton to="/login">Login</HeaderButton>
+                <HeaderButton to="/register">Register</HeaderButton>
               </>
             )}
           </RightMenu>
         </RightSideHeaderContent>
       </Header>
 
-      <Content>
-        <LeftMenu>
-          <LeftMenuItem to="/">Home</LeftMenuItem>
-          <LeftMenuItem to="/error">Error handling</LeftMenuItem>
-          <LeftMenuItem to="/zoopage">Zoo</LeftMenuItem>
-          <LeftMenuItem to="/adminpage">Admin</LeftMenuItem>
-          <LeftMenuItem to="/about">About</LeftMenuItem>
-        </LeftMenu>
+      <Body>
+        <SideBar>
+          <SideBarItem to="/">Home</SideBarItem>
+          <SideBarItem to="/error">Error handling</SideBarItem>
+          <SideBarItem to="/zoopage">Zoo</SideBarItem>
+          <SideBarItem to="/adminpage">Admin</SideBarItem>
+          <SideBarItem to="/about">About</SideBarItem>
+        </SideBar>
         <MainContent>
           {errorMessage && (
             <ErrorBanner>
               {errorMessage}
-              <button onClick={clearError} style={{ marginLeft: '10px' }}>
-                Dismiss
-              </button>
+              <ErrorButton onClick={clearError}>Dismiss</ErrorButton>
             </ErrorBanner>
           )}
-          <Outlet />
+          <Outlet context={{ errorMessage, setErrorMessage }} />
         </MainContent>
-      </Content>
+      </Body>
     </ThemeProvider>
   );
 }
-
-export default MainLayout;

@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import { ErrorContext } from '../context/ErrorContext';
+import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import facade from '../util/apiFacade';
 
 function LogIn({ setLoggedIn }) {
   const init = { username: '', password: '' };
   const [loginCredentials, setLoginCredentials] = useState(init);
-  const { setErrorMessage } = useContext(ErrorContext);
+  const { setErrorMessage } = useOutletContext();
 
-  const performLogin = (evt) => {
-    evt.preventDefault();
+  const performLogin = (event) => {
+    event.preventDefault();
     facade
       .login(loginCredentials.username, loginCredentials.password)
       .then(() => setLoggedIn(true))
@@ -24,10 +24,10 @@ function LogIn({ setLoggedIn }) {
       });
   };
 
-  const onChange = (evt) => {
+  const onChange = (event) => {
     setLoginCredentials({
       ...loginCredentials,
-      [evt.target.id]: evt.target.value,
+      [event.target.id]: event.target.value,
     });
   };
 
@@ -36,7 +36,7 @@ function LogIn({ setLoggedIn }) {
       <h2>Login</h2>
       <form onSubmit={performLogin}>
         <input
-          placeholder="User Name"
+          placeholder="Username"
           id="username"
           onChange={onChange}
           value={loginCredentials.username}
