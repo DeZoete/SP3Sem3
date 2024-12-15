@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-import LogIn from '../pages/Login.jsx';
 import { theme } from '../pages/theme.js';
 import apiFacade from '../util/apiFacade';
 
@@ -15,33 +13,17 @@ const Header = styled.header`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-const Logo = styled.div`
+const LogoLink = styled(Link)`
+  text-decoration: none; /* Remove underline */
+  display: inline-flex; /* Ensure proper alignment */
+`;
+
+const Logo = styled.img`
   display: flex;
-  align-items: center;
+  align-items: left;
+  height: 80px;
 `;
 
-const LogoImg = styled.img`
-  height: 40px;
-  margin-right: 15px;
-`;
-
-const NavMenu = styled.nav`
-  display: flex;
-  gap: 30px;
-  padding-bottom: 7px;
-`;
-
-const NavItem = styled(Link)`
-  color: white;
-  text-decoration: none;
-  font-size: 1.1rem;
-  &:hover {
-    text-decoration: underline;
-    font-weight: bold;
-  }
-`;
-
-// Content Layout
 const Content = styled.div`
   display: flex;
   margin-top: 20px;
@@ -77,9 +59,15 @@ const RightMenuItem = styled(Link)`
     font-weight: bold;
   }
 `;
-const HeaderContent = styled.div`
+
+const RightSideHeaderContent = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+
+const LeftSideHeaderContent = styled.div`
+  display: flex;
+  justify-content: flex-start;
 `;
 
 const MainContent = styled.div`
@@ -106,7 +94,12 @@ function MainLayout({ loggedIn, setLoggedIn }) {
   return (
     <ThemeProvider theme={theme}>
       <Header>
-        <HeaderContent>
+        <LeftSideHeaderContent>
+          <LogoLink to="/">
+            <Logo src="../../public/logo.png" alt="Logo" />
+          </LogoLink>
+        </LeftSideHeaderContent>
+        <RightSideHeaderContent>
           <RightMenu>
             {loggedIn ? (
               <>
@@ -122,7 +115,7 @@ function MainLayout({ loggedIn, setLoggedIn }) {
               </>
             )}
           </RightMenu>
-        </HeaderContent>
+        </RightSideHeaderContent>
       </Header>
 
       <Content>
