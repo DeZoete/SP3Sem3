@@ -139,9 +139,10 @@ export default function MainLayout({ loggedIn, setLoggedIn }) {
       <Body>
         <SideBar>
           <SideBarItem to="/">Home</SideBarItem>
-          <SideBarItem to="/error">Error handling</SideBarItem>
-          <SideBarItem to="/zoopage">Zoo</SideBarItem>
-          <SideBarItem to="/adminpage">Admin</SideBarItem>
+          {/* Skal den her være her?
+           <SideBarItem to="/error">Error handling</SideBarItem> */}
+          <SideBarItem to="/zoo">Zoo</SideBarItem>
+          <SideBarItem to="/admin">Admin</SideBarItem>
           <SideBarItem to="/about">About</SideBarItem>
         </SideBar>
         <MainContent>
