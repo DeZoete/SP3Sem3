@@ -98,7 +98,7 @@ const ErrorBanner = styled.div`
   border-radius: 5px;
 `;
 
-function MainLayout({ loggedIn }) {
+function MainLayout({ loggedIn, setLoggedIn }) {
   const logOut = () => {
     apiFacade.logout();
     setLoggedIn(false);

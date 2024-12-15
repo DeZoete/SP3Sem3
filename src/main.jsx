@@ -15,10 +15,13 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import ZooPage from './pages/ZooPage.jsx';
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(null);
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<MainLayout loggedIn={loggedIn} />}>
+      <Route
+        path="/"
+        element={<MainLayout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+      >
         <Route index element={<Home />} />
         <Route path="zoopage" element={<ZooPage />} />
         <Route path="register" element={<Register />} />
