@@ -1,5 +1,6 @@
 const BASE_URL = 'https://sp3api.magnewei.com/api/';
 const LOGIN_ENDPOINT = 'auth/login';
+const REGISTER_ENDPOINT = 'auth/register';
 const ALL_HOTELS_ENDPOINT = 'zoo';
 
 function handleHttpErrors(res) {
@@ -15,12 +16,15 @@ function apiFacade() {
   const setToken = (token) => {
     localStorage.setItem('jwtToken', token);
   };
+
   const getToken = () => {
     return localStorage.getItem('jwtToken');
   };
+
   const loggedIn = () => {
     return getToken() != null;
   };
+
   const logout = () => {
     localStorage.removeItem('jwtToken');
   };
@@ -52,6 +56,19 @@ function apiFacade() {
       })
       .catch((err) => {
         console.error('Login error:', err);
+        throw err;
+      });
+  };
+
+  const register = (user, password) => {
+    const options = makeOptions('POST', false, {
+      username: user,
+      password: password,
+    });
+    return fetch(BASE_URL + REGISTER_ENDPOINT, options)
+      .then(handleHttpErrors)
+      .catch((err) => {
+        console.error('Registration error:', err);
         throw err;
       });
   };
@@ -88,6 +105,7 @@ function apiFacade() {
     login,
     logout,
     fetchData,
+    register,
     hasUserAccess,
   };
 }
