@@ -1,6 +1,6 @@
 import TopMenu from '../components/TopMenu';
 import GlobalStyle from '../styles/GlobalStyle';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../pages/theme.js';
@@ -67,10 +67,9 @@ const LeftMenuItem = styled(Link)`
 const RightMenu = styled.div`
   display: flex;
   gap: 15px;
-  
 `;
 const RightMenuItem = styled(Link)`
-   color: white;
+  color: white;
   text-decoration: none;
   font-size: 1.1rem;
   &:hover {
@@ -80,9 +79,8 @@ const RightMenuItem = styled(Link)`
 `;
 const HeaderContent = styled.div`
   display: flex;
- justify-content: flex-end;
- `;
-
+  justify-content: flex-end;
+`;
 
 const MainContent = styled.div`
   flex: 1;
@@ -100,15 +98,16 @@ const ErrorBanner = styled.div`
   border-radius: 5px;
 `;
 function MainLayout() {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <ThemeProvider theme={theme}>
       <Header>
         <HeaderContent>
-        <RightMenu>
-      <RightMenuItem to="/login">Login</RightMenuItem>
-      <RightMenuItem to="/register">Register</RightMenuItem>
-      </RightMenu>
-      </HeaderContent>
+          <RightMenu>
+            <RightMenuItem to="/login">Login</RightMenuItem>
+            <RightMenuItem to="/register">Register</RightMenuItem>
+          </RightMenu>
+        </HeaderContent>
       </Header>
 
       <Content>

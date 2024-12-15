@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import facade from '../util/apiFacade';
 
-function LogIn({ setLoggedIn }) {
+function LogIn() {
   const init = { username: '', password: '' };
   const [loginCredentials, setLoginCredentials] = useState(init);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const performLogin = (evt) => {
     evt.preventDefault();
-    facade.login(loginCredentials.username, loginCredentials.password)
-      .then(() => setLoggedIn(true))
-      .catch(err => {
+    facade
+      .login(loginCredentials.username, loginCredentials.password)
+      .then(() => navigate('/'))
+      .catch((err) => {
         console.log(err);
         if (err.fullError) {
-          setError("Login failed: " + (err.fullError.message || "Unknown error"));
+          setError(
+            'Login failed: ' + (err.fullError.message || 'Unknown error')
+          );
         } else {
-          setError("Login failed: " + (err.message || "Unknown error"));
+          setError('Login failed: ' + (err.message || 'Unknown error'));
         }
       });
   };
