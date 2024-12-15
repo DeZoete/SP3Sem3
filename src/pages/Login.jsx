@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import facade from '../util/apiFacade';
 
-function LogIn() {
+function LogIn({ setLoggedIn }) {
   const init = { username: '', password: '' };
   const [loginCredentials, setLoginCredentials] = useState(init);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   const performLogin = (evt) => {
     evt.preventDefault();
     facade
       .login(loginCredentials.username, loginCredentials.password)
-      .then(() => navigate('/'))
+      .then(() => setLoggedIn(true))
       .catch((err) => {
         console.log(err);
         if (err.fullError) {

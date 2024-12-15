@@ -1,9 +1,9 @@
-import TopMenu from '../components/TopMenu';
-import GlobalStyle from '../styles/GlobalStyle';
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
+import LogIn from '../pages/Login.jsx';
 import { theme } from '../pages/theme.js';
+import apiFacade from '../util/apiFacade';
 
 const errorMessage = 'This is an error message';
 
@@ -97,15 +97,30 @@ const ErrorBanner = styled.div`
   margin-bottom: 20px;
   border-radius: 5px;
 `;
-function MainLayout() {
-  const [loggedIn, setLoggedIn] = useState(false);
+
+function MainLayout({ loggedIn }) {
+  const logOut = () => {
+    apiFacade.logout();
+    setLoggedIn(false);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Header>
         <HeaderContent>
           <RightMenu>
-            <RightMenuItem to="/login">Login</RightMenuItem>
-            <RightMenuItem to="/register">Register</RightMenuItem>
+            {loggedIn ? (
+              <>
+                <RightMenuItem to="/profile">Profile</RightMenuItem>
+                <RightMenuItem to="/" as={Link} onClick={logOut}>
+                  Logout
+                </RightMenuItem>
+              </>
+            ) : (
+              <>
+                <RightMenuItem to="/login">Login</RightMenuItem>
+                <RightMenuItem to="/register">Register</RightMenuItem>
+              </>
+            )}
           </RightMenu>
         </HeaderContent>
       </Header>

@@ -14,23 +14,26 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import ZooPage from './pages/ZooPage.jsx';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<MainLayout />}>
-      <Route index element={<Home />} />
-      <Route path="zoopage" element={<ZooPage />} />
-      <Route path="register" element={<Register />} />
-      <Route path="adminpage" element={<AdminPage />} />
-      <Route path="login" element={<Login />} />
-      <Route path="error" element={<ErrorPage />} />
-      <Route path="about" element={<About />} />
-    </Route>
-  )
-);
+const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<MainLayout loggedIn={loggedIn} />}>
+        <Route index element={<Home />} />
+        <Route path="zoopage" element={<ZooPage />} />
+        <Route path="register" element={<Register />} />
+        <Route path="adminpage" element={<AdminPage />} />
+        <Route path="login" element={<Login setLoggedIn={setLoggedIn} />} />
+        <Route path="error" element={<ErrorPage />} />
+        <Route path="about" element={<About />} />
+      </Route>
+    )
+  );
+  return <RouterProvider router={router} />;
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );
