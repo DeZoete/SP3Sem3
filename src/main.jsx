@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
+import { ErrorProvider } from './context/ErrorContext';
 import MainLayout from './layouts/MainLayout.jsx';
 import About from './pages/About.jsx';
 import AdminPage from './pages/AdminPage.jsx';
@@ -14,6 +15,7 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import ZooPage from './pages/ZooPage.jsx';
+
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(null);
   const router = createBrowserRouter(
@@ -37,6 +39,8 @@ const App = () => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <ErrorProvider>
+      <App />
+    </ErrorProvider>
   </React.StrictMode>
 );

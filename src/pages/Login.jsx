@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { ErrorContext } from '../context/ErrorContext';
 import facade from '../util/apiFacade';
 
 function LogIn({ setLoggedIn }) {
   const init = { username: '', password: '' };
   const [loginCredentials, setLoginCredentials] = useState(init);
-  const [error, setError] = useState(null);
+  const { setErrorMessage } = useContext(ErrorContext);
 
   const performLogin = (evt) => {
     evt.preventDefault();
@@ -15,11 +15,11 @@ function LogIn({ setLoggedIn }) {
       .catch((err) => {
         console.log(err);
         if (err.fullError) {
-          setError(
+          setErrorMessage(
             'Login failed: ' + (err.fullError.message || 'Unknown error')
           );
         } else {
-          setError('Login failed: ' + (err.message || 'Unknown error'));
+          setErrorMessage('Login failed: ' + (err.message || 'Unknown error'));
         }
       });
   };
@@ -50,7 +50,6 @@ function LogIn({ setLoggedIn }) {
         />
         <button type="submit">Login</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }

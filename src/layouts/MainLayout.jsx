@@ -1,9 +1,9 @@
+import React, { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
+import { ErrorContext } from '../context/ErrorContext.jsx';
 import { theme } from '../pages/theme.js';
 import apiFacade from '../util/apiFacade';
-
-const errorMessage = 'This is an error message';
 
 const Header = styled.header`
   background-color: #2d3a3f;
@@ -14,8 +14,8 @@ const Header = styled.header`
 `;
 
 const LogoLink = styled(Link)`
-  text-decoration: none; /* Remove underline */
-  display: inline-flex; /* Ensure proper alignment */
+  text-decoration: none;
+  display: inline-flex;
 `;
 
 const Logo = styled.img`
@@ -87,6 +87,8 @@ const ErrorBanner = styled.div`
 `;
 
 function MainLayout({ loggedIn, setLoggedIn }) {
+  const { errorMessage, clearError } = useContext(ErrorContext);
+
   const logOut = () => {
     apiFacade.logout();
     setLoggedIn(false);
@@ -96,7 +98,7 @@ function MainLayout({ loggedIn, setLoggedIn }) {
       <Header>
         <LeftSideHeaderContent>
           <LogoLink to="/">
-            <Logo src="../../public/logo.png" alt="Logo" />
+            <Logo src="../images/logo.png" alt="Logo" />
           </LogoLink>
         </LeftSideHeaderContent>
         <RightSideHeaderContent>
@@ -127,7 +129,14 @@ function MainLayout({ loggedIn, setLoggedIn }) {
           <LeftMenuItem to="/about">About</LeftMenuItem>
         </LeftMenu>
         <MainContent>
-          {errorMessage && <ErrorBanner>{errorMessage}</ErrorBanner>}
+          {errorMessage && (
+            <ErrorBanner>
+              {errorMessage}
+              <button onClick={clearError} style={{ marginLeft: '10px' }}>
+                Dismiss
+              </button>
+            </ErrorBanner>
+          )}
           <Outlet />
         </MainContent>
       </Content>
