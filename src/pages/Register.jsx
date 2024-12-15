@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import facade from '../util/apiFacade';
 
 export default function Register() {
@@ -7,7 +7,7 @@ export default function Register() {
     username: '',
     password: '',
   });
-  const [error, setError] = useState(null);
+  const [setErrorMessage] = useOutletContext();
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export default function Register() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setError(null);
+    setErrorMessage(null);
     facade
       .register(credentials.username, credentials.password)
       .then(() => {
@@ -26,7 +26,7 @@ export default function Register() {
         setTimeout(() => navigate('/login'), 2000);
       })
       .catch((err) => {
-        setError(
+        setErrorMessage(
           err.fullError?.message || 'An error occurred during registration.'
         );
       });
@@ -58,12 +58,6 @@ export default function Register() {
         </div>
         <button type="submit">Register</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && (
-        <p style={{ color: 'green' }}>
-          Registration successful! Redirecting to login...
-        </p>
-      )}
     </div>
   );
 }
