@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import facade from '../util/apiFacade';
 
 function LoggedIn() {
   const [dataFromServer, setDataFromServer] = useState([]);
-  const [error, setError] = useState('All is good');
+  const { errorMessage, setErrorMessage } = useOutletContext();
 
   useEffect(() => {
     facade
@@ -11,7 +12,7 @@ function LoggedIn() {
       .then((data) => setDataFromServer(data))
       .catch((error) => {
         console.log(JSON.stringify(error));
-        setError(error.status);
+        setErrorMessage(error.status);
       });
   }, []);
 
@@ -28,7 +29,7 @@ function LoggedIn() {
       ) : (
         <h3>Your role is not fit for this, dude!</h3>
       )}
-      <p>{error}</p>
+      <p>{errorMessage}</p>
     </div>
   );
 }
