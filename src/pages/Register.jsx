@@ -6,10 +6,13 @@ export default function Register() {
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
+    
   });
-  const [setErrorMessage] = useOutletContext();
+
+  const {setErrorMessage} = useOutletContext();
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+ 
 
   const handleChange = (evt) => {
     const { id, value } = evt.target;

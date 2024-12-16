@@ -12,15 +12,21 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import ZooPage from './pages/ZooPage.jsx';
+import { useState } from 'react';
+
+
 
 export default function Router() {
+const [loggedIn,setLoggedIn] = useState(false)
+ 
+  
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<MainLayout />}>
+      <Route path="/" element={<MainLayout loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="admin" element={<AdminPage />} />
-        <Route path="login" element={<Login />} />
+        <Route path="login" element={<Login setLoggedIn={setLoggedIn}/>} />
         <Route path="register" element={<Register />} />
         <Route path="zoo" element={<ZooPage />} />
         <Route path="*" element={<ErrorPage />} />

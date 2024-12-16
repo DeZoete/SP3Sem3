@@ -6,6 +6,8 @@ function LogIn({ setLoggedIn }) {
   const init = { username: '', password: '' };
   const [loginCredentials, setLoginCredentials] = useState(init);
   const { setErrorMessage } = useOutletContext();
+  
+
 
   const performLogin = (event) => {
     event.preventDefault();
@@ -16,10 +18,10 @@ function LogIn({ setLoggedIn }) {
         console.log(err);
         if (err.fullError) {
           setErrorMessage(
-            'Login failed: ' + (err.fullError.message || 'Unknown error')
+            'Login failed: ' + (err.fullError.message || 'password or username is incorrect')
           );
         } else {
-          setErrorMessage('Login failed: ' + (err.message || 'Unknown error'));
+          setErrorMessage('Login failed: ' + (err.message || 'password or username is incorrect'));
         }
       });
   };
