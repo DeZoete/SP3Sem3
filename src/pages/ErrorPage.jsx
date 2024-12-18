@@ -1,37 +1,35 @@
-import { useOutletContext } from 'react-router-dom';
+import styled from 'styled-components';
 
-const ErrorProvoker = () => {
-  const { setErrorMessage } = useOutletContext();
-  const handleThrowError = () => {
-    try {
-      throw new Error('An error was thrown in the ErrorProvoker component');
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
-  };
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ffcccc;
+  color: #990000;
+  font-family: Arial, sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+`;
 
-  const handleHttpError = async () => {
-    try {
-      const response = await fetch('https://jsonplaceholder.typicode.com/404');
-      if (!response.ok) {
-        throw new Error(
-          'HTTP error, status = ' + response.status + ' ' + response.statusText
-        );
-      }
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-      setErrorMessage(error.message);
-    }
-  };
+const ErrorMessage = styled.h1`
+  font-size: 2rem;
+  margin-bottom: 1rem;
+`;
 
+const ErrorDescription = styled.p`
+  font-size: 1.2rem;
+  opacity: 0.8;
+`;
+
+function ErrorPage() {
   return (
-    <>
-      <button onClick={handleThrowError}> Trigger a JS error</button>
-      <button onClick={handleHttpError}> Trigger a Async error</button>
-    </>
+    <ErrorContainer>
+      <ErrorMessage>Something went wrong</ErrorMessage>
+      <ErrorDescription>Please try again later.</ErrorDescription>
+    </ErrorContainer>
   );
-};
+}
 
-export default ErrorProvoker;
+export default ErrorPage;
