@@ -99,9 +99,10 @@ const ErrorButton = styled.button`
   background-color: #f8d7da;
 `;
 
-export default function MainLayout({ loggedIn, setLoggedIn }) {
+export default function MainLayout() {
   const [errorMessage, setErrorMessage] = useState('');
   const clearError = () => setErrorMessage('');
+  const [loggedIn, setLoggedIn] = useState(false);
   const logOut = () => {
     apiFacade.logout();
     setLoggedIn(false);
@@ -152,7 +153,9 @@ export default function MainLayout({ loggedIn, setLoggedIn }) {
               <ErrorButton onClick={clearError}>Dismiss</ErrorButton>
             </ErrorBanner>
           )}
-          <Outlet context={{ errorMessage, setErrorMessage }} />
+          <Outlet
+            context={{ errorMessage, setErrorMessage, loggedIn, setLoggedIn }}
+          />
         </MainContent>
       </Body>
     </ThemeProvider>

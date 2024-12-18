@@ -1,27 +1,30 @@
 import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import facade from '../util/apiFacade';
 
-function LogIn({ setLoggedIn }) {
+function LogIn() {
   const init = { username: '', password: '' };
   const [loginCredentials, setLoginCredentials] = useState(init);
-  const { setErrorMessage } = useOutletContext();
-  
-
+  const { setErrorMessage, setLoggedIn } = useOutletContext();
+  const navigate = useNavigate();
 
   const performLogin = (event) => {
     event.preventDefault();
     facade
       .login(loginCredentials.username, loginCredentials.password)
-      .then(() => setLoggedIn(true))
+      .then(() => setLoggedIn(true) & navigate('/'))
       .catch((err) => {
         console.log(err);
         if (err.fullError) {
           setErrorMessage(
-            'Login failed: ' + (err.fullError.message || 'password or username is incorrect')
+            'Login failed: ' +
+              (err.fullError.message || 'password or username is incorrect')
           );
         } else {
-          setErrorMessage('Login failed: ' + (err.message || 'password or username is incorrect'));
+          setErrorMessage(
+            'Login failed: ' +
+              (err.message || 'password or username is incorrect')
+          );
         }
       });
   };
