@@ -25,6 +25,7 @@ export default function ProfileAnimals() {
   });
   const { setErrorMessage } = useOutletContext();
   const isUserAdmin = facade.hasUserAccess('admin', true);
+  //   const isUserAdmin = true
 
   useEffect(() => {
     facade

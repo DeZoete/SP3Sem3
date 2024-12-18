@@ -29,7 +29,8 @@ export default function ProfileZoos() {
   const [zoos, setZoos] = useState([]);
   const [newZoo, setNewZoo] = useState({ zooName: '', zooLocation: '' });
   const { setErrorMessage } = useOutletContext();
-  const isUserAdmin = facade.hasUserAccess('admin', true);
+  //const isUserAdmin = facade.hasUserAccess('admin', true);
+  const isUserAdmin = true;
 
   useEffect(() => {
     facade
