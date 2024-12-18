@@ -25,6 +25,17 @@ const AnimalItem = styled.li`
   margin: 5px 0;
 `;
 
+const TableHeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const TableHeaderText = styled.div`
+  font-size: 1.2rem;
+  color: #333;
+`;
 export default function ProfileZoos() {
   const [zoos, setZoos] = useState([]);
   const [newZoo, setNewZoo] = useState({ zooName: '', zooLocation: '' });
@@ -47,7 +58,10 @@ export default function ProfileZoos() {
   const handleAddZoo = () => {
     facade
       .postData('zoos', newZoo)
-      .then((zoo) => setZoos([...zoos, zoo]))
+      .then((zoo) => {
+        setZoos([...zoos, zoo]);
+        setNewZoo({ zooName: '', zooLocation: '' });
+      })
       .catch((err) => setErrorMessage(err.message));
   };
 
@@ -68,6 +82,11 @@ export default function ProfileZoos() {
   return (
     <div>
       <h2>Zoo Administration</h2>
+      <TableHeaderContainer>
+        <TableHeaderText>
+          Manage the zoos and their animals below:
+        </TableHeaderText>
+      </TableHeaderContainer>
       <ZooTable>
         <thead>
           <tr>
@@ -93,6 +112,7 @@ export default function ProfileZoos() {
               </ZooCell>
               {isUserAdmin && (
                 <ZooCell>
+                  {/*
                   <button
                     onClick={() =>
                       handleEditZoo(zoo.zooId, {
@@ -103,6 +123,7 @@ export default function ProfileZoos() {
                   >
                     Edit
                   </button>
+                  */}
                   <button onClick={() => handleDeleteZoo(zoo.zooId)}>
                     Delete
                   </button>

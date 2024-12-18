@@ -42,7 +42,10 @@ export default function ProfileAnimals() {
   const handleAddAnimal = () => {
     facade
       .postData('animals', newAnimal)
-      .then((animal) => setAnimals([...animals, animal]))
+      .then((animal) => {
+        setAnimals([...animals, animal]);
+        setNewAnimal({ animalName: '', animalAge: '', speciesId: '' });
+      })
       .catch((err) => setErrorMessage(err.message));
   };
 
@@ -70,7 +73,6 @@ export default function ProfileAnimals() {
           <tr>
             <th>Name</th>
             <th>Age</th>
-            <th>Species ID</th>
             {isUserAdmin && <th>Actions</th>}
           </tr>
         </thead>
@@ -79,9 +81,9 @@ export default function ProfileAnimals() {
             <AnimalRow key={animal.animalId}>
               <AnimalCell>{animal.animalName}</AnimalCell>
               <AnimalCell>{animal.animalAge}</AnimalCell>
-              <AnimalCell>{animal.speciesId}</AnimalCell>
               {isUserAdmin && (
                 <AnimalCell>
+                  {/*
                   <button
                     onClick={() =>
                       handleEditAnimal(animal.animalId, {
@@ -93,6 +95,7 @@ export default function ProfileAnimals() {
                   >
                     Edit
                   </button>
+                  */}
                   <button onClick={() => handleDeleteAnimal(animal.animalId)}>
                     Delete
                   </button>
