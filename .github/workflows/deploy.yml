@@ -1,0 +1,51 @@
+name: Deploy Frontend to DigitalOcean
+
+on:
+  push:
+    branches: [master] # Trigger on direct pushes to the main branch
+  pull_request:
+    branches: [master] # Trigger when a pull request targeting main is merged/closed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # The type of runner for the job.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Checks out the repository under $GITHUB_WORKSPACE, so your workflow can access it.
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # Updated to use the latest version of the action
+        with:
+          node-version: '20.x' # Sets up Node.js version 20
+
+      - name: Debug directory structure
+        run: ls -R
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./zoo # Replace ./frontend with the path to your React project
+
+      - name: Upgrade dependencies
+        run: npm update
+        working-directory: ./zoo # Replace ./frontend with the path to your React project
+
+      - name: Build the React project
+        run: npm run build
+        working-directory: ./zoo # Replace ./frontend with the path to your React project
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DO_SSH_KEY }} # The SSH private key stored in GitHub secrets.
+
+      - name: Sync files to DigitalOcean Droplet using rsync
+        run: |
+          # Define SSH connection info
+          SSH_USER="root"
+          DO_DROPLET_IP="159.65.207.97"
+          APP_NAME="zoo"
+          REMOTE_PATH="~/2semDockerSetupRemote/site/$APP_NAME/"
+
+          # Sync build output to the Droplet using rsync
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./zoo/dist/ $SSH_USER@$DO_DROPLET_IP:$REMOTE_PATH
