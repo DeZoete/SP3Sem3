@@ -1,4 +1,5 @@
-const BASE_URL = 'https://sp3api.magnewei.com/api/';
+const BASE_URL = 'https://codupont.dk/api/v1/';
+const LOGIN_URL = 'https://sp3api.magnewei.com/api/';
 const LOGIN_ENDPOINT = 'auth/login';
 const REGISTER_ENDPOINT = 'auth/register';
 const ALL_HOTELS_ENDPOINT = 'zoo';
@@ -49,7 +50,7 @@ function apiFacade() {
       username: user,
       password: password,
     });
-    return fetch(BASE_URL + LOGIN_ENDPOINT, options)
+    return fetch(LOGIN_URL + LOGIN_ENDPOINT, options)
       .then(handleHttpErrors)
       .then((res) => {
         setToken(res.token);
@@ -65,7 +66,7 @@ function apiFacade() {
       username: user,
       password: password,
     });
-    return fetch(BASE_URL + REGISTER_ENDPOINT, options)
+    return fetch(LOGIN_URL + REGISTER_ENDPOINT, options)
       .then(handleHttpErrors)
       .catch((err) => {
         console.error('Registration error:', err);
@@ -74,10 +75,30 @@ function apiFacade() {
   };
 
   const fetchData = () => {
-    const options = makeOptions('GET', true); // True adds the token
+    const options = makeOptions('GET', true);
     return fetch(BASE_URL + ALL_HOTELS_ENDPOINT, options).then(
       handleHttpErrors
     );
+  };
+
+  const getData = (endpoint) => {
+    const options = makeOptions('GET', true);
+    return fetch(BASE_URL + endpoint, options).then(handleHttpErrors);
+  };
+
+  const postData = (endpoint, data) => {
+    const options = makeOptions('POST', true, data);
+    return fetch(BASE_URL + endpoint, options).then(handleHttpErrors);
+  };
+
+  const putData = (endpoint, data) => {
+    const options = makeOptions('PUT', true, data);
+    return fetch(BASE_URL + endpoint, options).then(handleHttpErrors);
+  };
+
+  const deleteData = (endpoint) => {
+    const options = makeOptions('DELETE', true);
+    return fetch(BASE_URL + endpoint, options).then(handleHttpErrors);
   };
 
   const makeOptions = (method, addToken, body) => {
@@ -107,6 +128,10 @@ function apiFacade() {
     fetchData,
     register,
     hasUserAccess,
+    getData,
+    postData,
+    putData,
+    deleteData,
   };
 }
 
