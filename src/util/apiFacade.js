@@ -1,8 +1,11 @@
+
 const BASE_URL = 'https://codupont.dk/api/v1/';
 const LOGIN_URL = 'https://sp3api.magnewei.com/api/';
+const BASE_URL2 = 'https://codupont.dk/api/v1/';
+
 const LOGIN_ENDPOINT = 'auth/login';
 const REGISTER_ENDPOINT = 'auth/register';
-const ALL_HOTELS_ENDPOINT = 'zoo';
+const ALL_ZOOS_ENDPOINT = 'zoo';
 
 function handleHttpErrors(res) {
   if (!res.ok) {
@@ -75,8 +78,14 @@ function apiFacade() {
   };
 
   const fetchData = () => {
-    const options = makeOptions('GET', true);
-    return fetch(BASE_URL + ALL_HOTELS_ENDPOINT, options).then(
+    const options = makeOptions('GET', true); // True adds the token
+    return fetch(BASE_URL + ALL_ZOOS_ENDPOINT, options).then(
+      handleHttpErrors
+    );
+  };
+  const fetchDataZoo = (endpoint) => {
+    const options = makeOptions('GET', true); // True adds the token
+    return fetch(BASE_URL2 + endpoint, options).then(
       handleHttpErrors
     );
   };
@@ -132,6 +141,9 @@ function apiFacade() {
     postData,
     putData,
     deleteData,
+
+    fetchDataZoo,
+
   };
 }
 
