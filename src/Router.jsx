@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.jsx";
 import About from "./pages/About.jsx";
-import AdminPage from "./pages/AdminPage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
@@ -25,7 +24,6 @@ export default function Router() {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="admin" element={<AdminPage />} />
         <Route
           path="login"
           element={

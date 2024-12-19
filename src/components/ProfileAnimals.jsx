@@ -24,7 +24,7 @@ export default function ProfileAnimals() {
     speciesId: '',
   });
   const { setErrorMessage } = useOutletContext();
-  const isUserAdmin = facade.hasUserAccess('admin', true);
+  const isUserAdmin = facade.hasUserAccess('user', true);
   //   const isUserAdmin = true
 
   useEffect(() => {
@@ -39,9 +39,9 @@ export default function ProfileAnimals() {
     setNewAnimal({ ...newAnimal, [name]: value });
   };
 
-  const handleAddAnimal = () => {
+  const handleAddAnimal = (id) => {
     facade
-      .postData('animals', newAnimal)
+      .postData(`animals/zoo/${id}`, newAnimal)
       .then((animal) => {
         setAnimals([...animals, animal]);
         setNewAnimal({ animalName: '', animalAge: '', speciesId: '' });
