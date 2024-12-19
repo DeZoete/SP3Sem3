@@ -2,7 +2,8 @@ import {
   Route,
   RouterProvider,
   createBrowserRouter,
-  createRoutesFromElements,Navigate
+  createRoutesFromElements,
+  Navigate
 } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.jsx";
 import About from "./pages/About.jsx";
@@ -23,7 +24,7 @@ export default function Router() {
       <Route path="/" element={<MainLayout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
-        <Route path="profile" element={<ProfilePage />} />
+        <Route path="zoopage" element={<ZooPage />} />
         <Route
           path="login"
           element={

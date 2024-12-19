@@ -142,7 +142,7 @@ export default function MainLayout() {
           <SideBarItem to="/">Home</SideBarItem>
           {/* Skal den her være her?
            <SideBarItem to="/error">Error handling</SideBarItem> */}
-          <SideBarItem to="/zoo">Data</SideBarItem>
+          <SideBarItem to="/zoopage">Data</SideBarItem>
           <SideBarItem to="/admin">Admin</SideBarItem>
           <SideBarItem to="/about">About</SideBarItem>
         </SideBar>
